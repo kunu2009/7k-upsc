@@ -48,11 +48,11 @@ const BottomNav: React.FC<BottomNavProps> = ({ activePage, setActivePage }) => {
             onClick={() => setActivePage('mcqs')}
         />
         <NavItem 
-            page="flashcards"
-            label="Flashcards"
-            icon={ICONS.flashcards}
-            isActive={activePage === 'flashcards'}
-            onClick={() => setActivePage('flashcards')}
+            page="study_tools"
+            label="Study Tools"
+            icon={ICONS.study_tools}
+            isActive={activePage === 'study_tools'}
+            onClick={() => setActivePage('study_tools')}
         />
          <NavItem 
             page="reels"

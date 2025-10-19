@@ -13,7 +13,7 @@ export enum Subject {
   Ethics = "Ethics",
 }
 
-export type Page = 'reels' | 'mcqs' | 'flashcards' | 'interview' | 'current_affairs';
+export type Page = 'reels' | 'mcqs' | 'study_tools' | 'interview' | 'current_affairs';
 
 export interface ReelCardData {
   id: number;
@@ -52,4 +52,16 @@ export interface CurrentAffairsData {
     title: string;
     summary: string;
     category: Subject;
+}
+
+export interface MindMapNode {
+  topic: string;
+  children?: MindMapNode[];
+}
+
+export interface MindMapData {
+  id: number;
+  subject: Subject;
+  centralTopic: string;
+  nodes: MindMapNode[];
 }

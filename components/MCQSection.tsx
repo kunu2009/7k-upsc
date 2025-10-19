@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { MCQS } from '../constants';
 import { MCQData } from '../types';
@@ -7,12 +6,14 @@ const MCQ_PROGRESS_KEY = 'mcqProgress';
 const MCQ_FEEDBACK_KEY = 'mcqFeedback';
 const MCQ_BOOKMARKS_KEY = 'mcqBookmarks';
 
+const EXAM_DURATION = 15 * 60; // 15 minutes
+const EXAM_QUESTION_COUNT = 20;
+
 const getInitialProgress = () => {
   try {
     const savedProgress = localStorage.getItem(MCQ_PROGRESS_KEY);
     if (savedProgress) {
       const { score } = JSON.parse(savedProgress);
-      // We reset the question index to 0 on each load to avoid confusion with filters.
       if (typeof score === 'number') {
         return { currentQuestionIndex: 0, score };
       }
@@ -43,16 +44,33 @@ const getInitialBookmarks = (): Record<number, boolean> => {
     }
 };
 
+const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
 const MCQSection: React.FC = () => {
+  // Common State
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(getInitialProgress().currentQuestionIndex);
-  const [score, setScore] = useState(getInitialProgress().score);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  // Practice Mode State
+  const [score, setScore] = useState(getInitialProgress().score);
   const [showAnswer, setShowAnswer] = useState(false);
   const [feedback, setFeedback] = useState(getInitialFeedback());
   const [copyStatus, setCopyStatus] = useState('Copy');
   const [bookmarks, setBookmarks] = useState(getInitialBookmarks());
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
+  
+  // Exam Mode State
+  const [isExamMode, setIsExamMode] = useState(false);
+  const [examQuestions, setExamQuestions] = useState<MCQData[]>([]);
+  const [examAnswers, setExamAnswers] = useState<Record<number, number>>({});
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [examFinished, setExamFinished] = useState(false);
 
+  // Memoized lists and current question
   const filteredMCQs = useMemo(() => {
     if (showOnlyBookmarked) {
         return MCQS.filter(mcq => bookmarks[mcq.id]);
@@ -60,57 +78,109 @@ const MCQSection: React.FC = () => {
     return MCQS;
   }, [showOnlyBookmarked, bookmarks]);
 
+  const currentQuestion: MCQData | undefined = isExamMode ? examQuestions[currentQuestionIndex] : filteredMCQs[currentQuestionIndex];
+
+  // Effects for Practice Mode
   useEffect(() => {
-    // Reset index when filter changes to avoid out-of-bounds errors
+    if (isExamMode) return;
     setCurrentQuestionIndex(0);
-  }, [showOnlyBookmarked]);
-
+  }, [showOnlyBookmarked, isExamMode]);
 
   useEffect(() => {
+    if (isExamMode) return;
     try {
-      // Save score but not index, as index resets on load
       const progress = JSON.stringify({ score });
       localStorage.setItem(MCQ_PROGRESS_KEY, progress);
     } catch (error) {
       console.error("Failed to save MCQ progress to localStorage", error);
     }
-  }, [score]);
+  }, [score, isExamMode]);
 
   useEffect(() => {
+    if (isExamMode) return;
     try {
         localStorage.setItem(MCQ_FEEDBACK_KEY, JSON.stringify(feedback));
     } catch (error) {
         console.error("Failed to save MCQ feedback to localStorage", error);
     }
-  }, [feedback]);
+  }, [feedback, isExamMode]);
   
   useEffect(() => {
+    if (isExamMode) return;
     try {
         localStorage.setItem(MCQ_BOOKMARKS_KEY, JSON.stringify(bookmarks));
     } catch (error) {
         console.error("Failed to save MCQ bookmarks to localStorage", error);
     }
-  }, [bookmarks]);
+  }, [bookmarks, isExamMode]);
+  
+  // Effect for Exam Timer
+  useEffect(() => {
+    if (!isExamMode || examFinished) return;
+    if (timeLeft <= 0) {
+        setExamFinished(true);
+        return;
+    }
+    const timerId = setInterval(() => {
+        setTimeLeft(prevTime => prevTime - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [isExamMode, examFinished, timeLeft]);
+  
+  // Exam Score Calculation
+  const examScore = useMemo(() => {
+    if (!examFinished) return 0;
+    return examQuestions.reduce((score, question, index) => {
+        if (examAnswers[index] === question.correctAnswerIndex) {
+            return score + 1;
+        }
+        return score;
+    }, 0);
+  }, [examFinished, examQuestions, examAnswers]);
 
-  const currentQuestion: MCQData | undefined = filteredMCQs[currentQuestionIndex];
+  // Exam Mode Controls
+  const startExam = () => {
+    const shuffled = [...MCQS].sort(() => 0.5 - Math.random());
+    setExamQuestions(shuffled.slice(0, EXAM_QUESTION_COUNT));
+    setCurrentQuestionIndex(0);
+    setExamAnswers({});
+    setTimeLeft(EXAM_DURATION);
+    setIsExamMode(true);
+    setExamFinished(false);
+    setSelectedOption(null);
+  };
+  
+  const exitExamMode = () => {
+      setIsExamMode(false);
+      setExamFinished(false);
+      setCurrentQuestionIndex(0);
+      setSelectedOption(null);
+  };
+  
+  const handleExamOptionSelect = (optionIndex: number) => {
+    setExamAnswers(prev => ({ ...prev, [currentQuestionIndex]: optionIndex }));
+    setSelectedOption(optionIndex);
+  };
 
-  if (!currentQuestion) {
-      return (
-        <div className="max-w-2xl mx-auto p-4 text-center">
-            <div className="bg-slate-800 p-6 rounded-lg shadow-xl">
-                <h2 className="text-xl font-bold text-sky-400 mb-4">No Questions Found</h2>
-                <p className="text-slate-300 mb-6">You haven't bookmarked any questions yet. Clear the filter to see all questions.</p>
-                <button
-                    onClick={() => setShowOnlyBookmarked(false)}
-                    className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                >
-                    Show All Questions
-                </button>
-            </div>
-        </div>
-      );
-  }
+  const handleExamNext = () => {
+    if (currentQuestionIndex < examQuestions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedOption(examAnswers[currentQuestionIndex + 1] ?? null);
+    } else {
+        setExamFinished(true);
+    }
+  };
+  
+  const handleExamPrev = () => {
+      if (currentQuestionIndex > 0) {
+          setCurrentQuestionIndex(currentQuestionIndex - 1);
+          setSelectedOption(examAnswers[currentQuestionIndex - 1] ?? null);
+      }
+  };
+  
+  const finishExam = () => setExamFinished(true);
 
+  // Practice Mode Controls
   const handleOptionSelect = (index: number) => {
     if (showAnswer) return;
     setSelectedOption(index);
@@ -125,7 +195,7 @@ const MCQSection: React.FC = () => {
   };
 
   const handleCheckAnswer = () => {
-    if (selectedOption === null) return;
+    if (selectedOption === null || !currentQuestion) return;
     setShowAnswer(true);
     if (selectedOption === currentQuestion.correctAnswerIndex) {
       setScore(score + 1);
@@ -139,29 +209,25 @@ const MCQSection: React.FC = () => {
     if (currentQuestionIndex < filteredMCQs.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Quiz finished for the current filter
-       setCurrentQuestionIndex(0); // Restart this set of questions
+       setCurrentQuestionIndex(0);
     }
   };
   
   const toggleBookmark = () => {
-      const questionId = currentQuestion.id;
-      setBookmarks(prev => ({
-          ...prev,
-          [questionId]: !prev[questionId]
-      }));
+      if (!currentQuestion) return;
+      setBookmarks(prev => ({ ...prev, [currentQuestion.id]: !prev[currentQuestion.id] }));
   };
 
   const handleFeedback = (feedbackType: 'liked' | 'disliked') => {
-    const questionId = currentQuestion.id;
+    if (!currentQuestion) return;
     setFeedback(prev => {
-        const newFeedback = prev[questionId] === feedbackType ? null : feedbackType;
-        return { ...prev, [questionId]: newFeedback };
+        const newFeedback = prev[currentQuestion.id] === feedbackType ? null : feedbackType;
+        return { ...prev, [currentQuestion.id]: newFeedback };
     });
   };
 
   const handleCopyExplanation = () => {
-    if (navigator.clipboard) {
+    if (navigator.clipboard && currentQuestion) {
         navigator.clipboard.writeText(currentQuestion.explanation).then(() => {
             setCopyStatus('Copied!');
             setTimeout(() => setCopyStatus('Copy'), 2000);
@@ -172,19 +238,123 @@ const MCQSection: React.FC = () => {
     }
   };
 
-  const getOptionClass = (index: number) => {
-    if (!showAnswer) {
+  // Dynamic Class Helpers
+  const getPracticeOptionClass = (index: number) => {
+    if (!showAnswer || !currentQuestion) {
       return selectedOption === index ? 'bg-sky-500' : 'bg-slate-700 hover:bg-slate-600';
     }
-    if (index === currentQuestion.correctAnswerIndex) {
-      return 'bg-green-600';
-    }
-    if (index === selectedOption) {
-      return 'bg-red-600';
-    }
+    if (index === currentQuestion.correctAnswerIndex) return 'bg-green-600';
+    if (index === selectedOption) return 'bg-red-600';
     return 'bg-slate-700';
   };
   
+  const getExamOptionClass = (index: number) => {
+    return selectedOption === index ? 'bg-sky-500 ring-2 ring-sky-300' : 'bg-slate-700 hover:bg-slate-600';
+  };
+
+  const getResultsOptionClass = (q: MCQData, optionIndex: number, userAnswerIndex: number | undefined) => {
+      const isCorrect = optionIndex === q.correctAnswerIndex;
+      const isUserAnswer = optionIndex === userAnswerIndex;
+
+      if (isCorrect) return 'bg-green-600/80 ring-2 ring-green-400';
+      if (isUserAnswer) return 'bg-red-600/80 ring-2 ring-red-400';
+      return 'bg-slate-700';
+  };
+
+  // Conditional Rendering
+  if (isExamMode) {
+    if (examFinished) {
+      // Exam Results View
+      return (
+        <div className="max-w-3xl mx-auto p-4">
+            <div className="bg-slate-800 p-6 rounded-lg shadow-xl text-center">
+                <h2 className="text-3xl font-bold text-sky-400">Exam Over!</h2>
+                <p className="text-4xl font-bold mt-4">Score: {examScore} / {examQuestions.length}</p>
+                <p className="text-slate-400 mt-2">Time Taken: {formatTime(EXAM_DURATION - timeLeft)}</p>
+                <div className="flex justify-center space-x-4 mt-6">
+                    <button onClick={startExam} className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">Retry Exam</button>
+                    <button onClick={exitExamMode} className="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">Back to Practice</button>
+                </div>
+            </div>
+
+            <div className="mt-8">
+                <h3 className="text-2xl font-bold mb-4 text-center">Review Your Answers</h3>
+                <div className="space-y-6">
+                    {examQuestions.map((q, idx) => (
+                        <div key={q.id} className="bg-slate-800 p-5 rounded-lg shadow-lg">
+                            <p className="font-semibold text-lg">Q{idx + 1}: {q.question}</p>
+                            <div className="space-y-3 mt-4">
+                                {q.options.map((opt, optIdx) => (
+                                    <div key={optIdx} className={`p-3 rounded-lg text-left ${getResultsOptionClass(q, optIdx, examAnswers[idx])}`}>
+                                        {opt}
+                                        {optIdx === q.correctAnswerIndex && <span className="font-bold ml-2">(Correct)</span>}
+                                        {optIdx === examAnswers[idx] && optIdx !== q.correctAnswerIndex && <span className="font-bold ml-2">(Your Answer)</span>}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-4 p-3 bg-slate-900 rounded-md">
+                                <p className="font-semibold text-emerald-400">Explanation:</p>
+                                <p className="text-slate-300 mt-1">{q.explanation}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+      );
+    }
+    
+    // Active Exam View
+    if (!currentQuestion) return null; // Should not happen in exam mode
+    return (
+        <div className="max-w-2xl mx-auto p-4">
+          <div className="bg-slate-800 p-6 rounded-lg shadow-xl">
+            <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-4">
+                <h2 className="text-xl font-bold text-emerald-400">Exam Mode</h2>
+                <div className="text-lg font-mono bg-slate-900 px-3 py-1 rounded-md text-red-400">
+                    {formatTime(timeLeft)}
+                </div>
+            </div>
+             <div className="flex justify-between items-center mb-4 text-slate-400">
+                <span>Question {currentQuestionIndex + 1}/{examQuestions.length}</span>
+                <button onClick={finishExam} className="text-sm font-semibold text-red-400 hover:underline">Submit Exam</button>
+             </div>
+             <p className="text-lg font-semibold mb-6 text-white">{currentQuestion.question}</p>
+             <div className="space-y-4">
+                {currentQuestion.options.map((option, index) => (
+                    <button key={index} onClick={() => handleExamOptionSelect(index)} className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${getExamOptionClass(index)}`}>
+                    {option}
+                    </button>
+                ))}
+             </div>
+             <div className="flex justify-between mt-8">
+                <button onClick={handleExamPrev} disabled={currentQuestionIndex === 0} className="bg-slate-600 hover:bg-slate-500 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    Previous
+                </button>
+                <button onClick={handleExamNext} className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                    {currentQuestionIndex === examQuestions.length - 1 ? 'Finish' : 'Next'}
+                </button>
+             </div>
+          </div>
+        </div>
+    );
+  }
+
+  // Practice Mode View
+  if (!currentQuestion) {
+      return (
+        <div className="max-w-2xl mx-auto p-4 text-center">
+            <div className="bg-slate-800 p-6 rounded-lg shadow-xl">
+                <h2 className="text-xl font-bold text-sky-400 mb-4">No Questions Found</h2>
+                <p className="text-slate-300 mb-6">You haven't bookmarked any questions yet. Clear the filter to see all questions.</p>
+                <button onClick={() => setShowOnlyBookmarked(false)} className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Show All Questions
+                </button>
+            </div>
+        </div>
+      );
+  }
+
   const currentFeedback = feedback[currentQuestion.id];
   const isBookmarked = bookmarks[currentQuestion.id];
 
@@ -204,6 +374,7 @@ const MCQSection: React.FC = () => {
                         <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition ${showOnlyBookmarked ? 'transform translate-x-full bg-sky-400' : ''}`}></div>
                     </div>
                  </label>
+                 <button onClick={startExam} className="text-sm font-semibold bg-emerald-600/80 text-white hover:bg-emerald-600 px-3 py-2 rounded-lg transition-colors">Exam Mode</button>
                  <button onClick={handleReset} className="text-xs font-semibold uppercase bg-red-600/20 text-red-400 hover:bg-red-600/40 px-2 py-1 rounded transition-colors">Reset Score</button>
             </div>
         </div>
@@ -211,7 +382,6 @@ const MCQSection: React.FC = () => {
         <div className="flex items-start">
             <p className="flex-grow text-lg font-semibold mb-6 text-white">{currentQuestion.question}</p>
             <button onClick={toggleBookmark} className="ml-4 p-2 rounded-full hover:bg-slate-700 transition-colors" aria-label="Bookmark question">
-                {/* FIX: Combined duplicate className attributes into one. */}
                 <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${isBookmarked ? 'text-sky-400' : 'text-slate-400'}`} fill={isBookmarked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                 </svg>
@@ -224,7 +394,7 @@ const MCQSection: React.FC = () => {
               key={index}
               onClick={() => handleOptionSelect(index)}
               disabled={showAnswer}
-              className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${getOptionClass(index)}`}
+              className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${getPracticeOptionClass(index)}`}
             >
               {option}
             </button>

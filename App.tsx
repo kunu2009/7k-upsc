@@ -4,7 +4,7 @@ import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 import ReelFeed from './components/ReelFeed';
 import MCQSection from './components/MCQSection';
-import FlashcardSection from './components/FlashcardSection';
+import StudyToolsSection from './components/StudyToolsSection';
 import InterviewPrepSection from './components/InterviewPrepSection';
 import CurrentAffairsSection from './components/CurrentAffairsSection';
 import { Page } from './types';
@@ -18,8 +18,8 @@ const App: React.FC = () => {
         return <ReelFeed />;
       case 'mcqs':
         return <MCQSection />;
-      case 'flashcards':
-        return <FlashcardSection />;
+      case 'study_tools':
+        return <StudyToolsSection />;
       case 'interview':
         return <InterviewPrepSection />;
       case 'current_affairs':

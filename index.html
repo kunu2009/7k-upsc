@@ -42,6 +42,54 @@
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
       }
+
+      /* For Mind Map rendering */
+      .mindmap-node {
+          position: relative;
+          list-style: none;
+          padding-left: 2rem;
+          margin-top: 0.5rem;
+      }
+      .mindmap-node::before, .mindmap-node::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          border-color: #475569; /* slate-600 */
+          border-style: solid;
+      }
+      /* Horizontal line from parent */
+      .mindmap-node::before {
+          top: 1rem;
+          width: 1.5rem;
+          height: 0;
+          border-top-width: 2px;
+      }
+      /* Vertical line connecting siblings */
+      .mindmap-node:not(:last-child)::after {
+          top: 0;
+          bottom: 0;
+          width: 0;
+          border-left-width: 2px;
+      }
+      .mindmap-children > .mindmap-node:first-child::after {
+          top: 1rem;
+      }
+      .mindmap-root > .mindmap-node::before {
+          display: none;
+      }
+      .mindmap-topic {
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          background-color: #1e293b; /* slate-800 */
+          border: 1px solid #334155; /* slate-700 */
+          border-radius: 0.5rem;
+          position: relative;
+          top: 0.25rem;
+      }
+      .mindmap-children {
+          list-style: none;
+          padding-left: 0;
+      }
     </style>
 </head>
   <body class="bg-slate-900">

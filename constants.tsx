@@ -1,5 +1,5 @@
 import React from 'react';
-import { Subject, ReelCardData, MCQData, FlashcardData, InterviewQuestionData, CurrentAffairsData } from './types';
+import { Subject, ReelCardData, MCQData, FlashcardData, InterviewQuestionData, CurrentAffairsData, MindMapData } from './types';
 
 export const REEL_CARDS: ReelCardData[] = [
     { id: 1, subject: Subject.History, title: 'Ancient India', content: 'The Harappan civilization, one of the world\'s oldest urban cultures, flourished in the Indus River basin from about 2500 BCE to 1900 BCE.', gradient: 'from-amber-500 to-orange-600' },
@@ -14,6 +14,9 @@ export const REEL_CARDS: ReelCardData[] = [
     { id: 10, subject: Subject.Polity, title: 'Basic Structure Doctrine', content: 'The Basic Structure Doctrine, established in the Kesavananda Bharati case (1973), holds that Parliament cannot alter the fundamental framework of the Constitution.', gradient: 'from-blue-600 to-indigo-800' },
     { id: 11, subject: Subject.Economy, title: 'UPI Goes Global', content: 'India\'s Unified Payments Interface (UPI) is expanding globally, enabling faster and cheaper cross-border transactions and showcasing India\'s fintech prowess.', gradient: 'from-red-500 to-rose-700' },
     { id: 12, subject: Subject.Ethics, title: 'Ethical Dilemma', content: 'An ethical dilemma involves a conflict between moral imperatives, where obeying one would result in transgressing another. Civil servants often face such situations.', gradient: 'from-purple-500 to-indigo-600' },
+    { id: 13, subject: Subject.History, title: 'Ashoka\'s Dhamma', content: 'Ashoka\'s policy of Dhamma was not a new religion but a moral code of conduct based on tolerance, non-violence, and respect for elders, aimed at governing his vast empire peacefully.', gradient: 'from-orange-400 to-red-500' },
+    { id: 14, subject: Subject.Geography, title: 'Himalayan River Systems', content: 'The three main Himalayan river systems are the Indus, the Ganga, and the Brahmaputra. These rivers are perennial, fed by both melting snow and rainfall.', gradient: 'from-cyan-400 to-blue-500' },
+    { id: 15, subject: Subject.Strategy, title: 'Importance of Mock Tests', content: 'Regularly taking mock tests simulates the exam environment, helps in time management, identifies weak areas, and builds confidence for the actual examination.', gradient: 'from-green-400 to-teal-500' },
 ];
 
 export const MCQS: MCQData[] = [
@@ -26,6 +29,7 @@ export const MCQS: MCQData[] = [
     { id: 101, subject: Subject.Polity, question: 'Which Constitutional Amendment Act introduced the Goods and Services Tax (GST)?', options: ['100th Amendment', '101st Amendment', '102nd Amendment', '103rd Amendment'], correctAnswerIndex: 1, explanation: 'The 101st Constitutional Amendment Act, 2016, introduced the Goods and Services Tax (GST) in India, which is a comprehensive indirect tax on manufacture, sale, and consumption of goods and services.' },
     { id: 102, subject: Subject.Polity, question: 'The power of the President of India to issue an ordinance is a:', options: ['Legislative power', 'Executive power', 'Judicial power', 'Constituent power'], correctAnswerIndex: 0, explanation: 'Article 123 of the Constitution grants the President certain law-making powers to promulgate ordinances when either of the two Houses of Parliament is not in session, making it a legislative power.' },
     { id: 103, subject: Subject.Polity, question: 'Who presides over the joint sitting of the two Houses of Parliament?', options: ['The President', 'The Prime Minister', 'The Speaker of the Lok Sabha', 'The Chairman of the Rajya Sabha'], correctAnswerIndex: 2, explanation: 'The Speaker of the Lok Sabha presides over a joint sitting of the two Houses of Parliament. In their absence, the Deputy Speaker of the Lok Sabha presides.' },
+    { id: 51, subject: Subject.Polity, question: 'The "Panchayati Raj" system was given constitutional status by which amendment?', options: ['72nd Amendment', '73rd Amendment', '74th Amendment', '42nd Amendment'], correctAnswerIndex: 1, explanation: 'The 73rd Constitutional Amendment Act of 1992 gave constitutional status to the Panchayati Raj institutions, making them a mandatory part of the state structure.' },
 
     // History
     { id: 6, subject: Subject.History, question: 'The Battle of Plassey was fought in:', options: ['1757', '1764', '1857', '1947'], correctAnswerIndex: 0, explanation: 'The Battle of Plassey was a decisive victory of the British East India Company over the Nawab of Bengal and his French allies on 23 June 1757.' },
@@ -35,6 +39,7 @@ export const MCQS: MCQData[] = [
     { id: 10, subject: Subject.History, question: 'The "Quit India Movement" was launched by Mahatma Gandhi in:', options: ['1920', '1930', '1942', '1947'], correctAnswerIndex: 2, explanation: 'The Quit India Movement was launched at the Bombay session of the All-India Congress Committee by Mahatma Gandhi on 8 August 1942, during World War II.' },
     { id: 104, subject: Subject.History, question: 'The ancient city of "Lothal" was part of which civilization?', options: ['Mesopotamian', 'Indus Valley', 'Egyptian', 'Chinese'], correctAnswerIndex: 1, explanation: 'Lothal was one of the southernmost cities of the ancient Indus Valley Civilization, located in the Bhāl region of the modern state of Gujarāt.' },
     { id: 105, subject: Subject.History, question: 'Who was the Mughal emperor during the 1857 Revolt?', options: ['Akbar II', 'Bahadur Shah Zafar', 'Shah Alam II', 'Aurangzeb'], correctAnswerIndex: 1, explanation: 'Bahadur Shah Zafar was the last Mughal emperor. He was the nominal head of the Indian Rebellion of 1857.' },
+    { id: 52, subject: Subject.History, question: 'The "Round Table Conferences" were held in London to discuss:', options: ['India\'s independence', 'Provincial autonomy', 'Future constitutional reforms in India', 'The partition of India'], correctAnswerIndex: 2, explanation: 'The three Round Table Conferences of 1930–32 were a series of peace conferences organized by the British Government to discuss constitutional reforms in India.' },
 
     // Geography
     { id: 11, subject: Subject.Geography, question: 'Which is the highest peak in India?', options: ['Mount Everest', 'K2', 'Kangchenjunga', 'Nanda Devi'], correctAnswerIndex: 2, explanation: 'Kangchenjunga, located in Sikkim, is the highest peak in India and the third highest in the world. K2 is in POK.' },
@@ -43,6 +48,7 @@ export const MCQS: MCQData[] = [
     { id: 14, subject: Subject.Geography, question: 'Which type of climate is characterized by wet winters and dry summers?', options: ['Equatorial', 'Monsoon', 'Mediterranean', 'Tundra'], correctAnswerIndex: 2, explanation: 'The Mediterranean climate is known for its hot, dry summers and mild, wet winters.' },
     { id: 15, subject: Subject.Geography, question: 'The "Loktak Lake" is located in which state?', options: ['Manipur', 'Mizoram', 'Meghalaya', 'Assam'], correctAnswerIndex: 0, explanation: 'Loktak Lake, the largest freshwater lake in Northeast India, is famous for the phumdis (heterogeneous mass of vegetation, soil, and organic matter) floating over it. It is located in Manipur.' },
     { id: 106, subject: Subject.Geography, question: 'The "Duncan Passage" is located between:', options: ['South and Little Andaman', 'North and Middle Andaman', 'Little Nicobar and Great Nicobar', 'Andaman and Nicobar'], correctAnswerIndex: 0, explanation: 'The Duncan Passage is a strait in the Indian Ocean. It separates Rutland Island (part of Great Andaman) to the north and Little Andaman to the south.' },
+    { id: 53, subject: Subject.Geography, question: 'Which type of soil is most suitable for cotton cultivation?', options: ['Alluvial Soil', 'Red Soil', 'Laterite Soil', 'Black Soil (Regur)'], correctAnswerIndex: 3, explanation: 'Black soils, also known as Regur soils, are rich in clay and are ideal for growing cotton due to their high moisture retention capacity.' },
 
     // Economy
     { id: 16, subject: Subject.Economy, question: 'What does "Fiscal Deficit" mean?', options: ['Total revenue minus total expenditure', 'Government\'s total expenditure minus its total revenue, excluding borrowing', 'Revenue deficit plus capital expenditure', 'Government\'s market borrowings'], correctAnswerIndex: 1, explanation: 'Fiscal Deficit is the difference between the total expenditure of the government and its total revenue, which indicates the total borrowing needs of the government.' },
@@ -52,6 +58,7 @@ export const MCQS: MCQData[] = [
     { id: 20, subject: Subject.Economy, question: 'Which sector contributes the most to India\'s GDP?', options: ['Agriculture', 'Manufacturing', 'Services', 'Mining'], correctAnswerIndex: 2, explanation: 'The services sector, which includes trade, hotels, transport, communication, and services related to broadcasting, is the largest contributor to India\'s Gross Domestic Product (GDP).' },
     { id: 107, subject: Subject.Economy, question: 'What does the term "disinvestment" refer to?', options: ['Closing down public sector units', 'The government selling its assets or a stake in public sector undertakings', 'Investing in foreign companies', 'Allowing private companies to invest in public infrastructure'], correctAnswerIndex: 1, explanation: 'Disinvestment is the action of an organization or government selling or liquidating an asset or subsidiary. In India, it typically refers to the government selling its stake in Public Sector Undertakings (PSUs).' },
     { id: 108, subject: Subject.Economy, question: 'The "Mahalanobis Model" of economic development was adopted in which Five-Year Plan?', options: ['First Five-Year Plan', 'Second Five-Year Plan', 'Third Five-Year Plan', 'Fourth Five-Year Plan'], correctAnswerIndex: 1, explanation: 'The Second Five-Year Plan (1956-61) was based on the Mahalanobis model, which emphasized the development of heavy industries to achieve rapid industrialization.' },
+    { id: 54, subject: Subject.Economy, question: 'What is "Minimum Support Price" (MSP)?', options: ['The price at which government sells food grains', 'A price floor set by the government to purchase directly from the farmers', 'The maximum price a farmer can charge', 'The average price of crops in the international market'], correctAnswerIndex: 1, explanation: 'MSP is a form of market intervention by the Government of India to insure agricultural producers against any sharp fall in farm prices. It is announced before the sowing season.' },
     
     // Science & Tech
     { id: 21, subject: Subject.ScienceTech, question: 'What is the primary objective of India\'s Aditya-L1 mission?', options: ['To study the Moon\'s surface', 'To study the Sun\'s corona', 'To explore Mars', 'To study asteroids'], correctAnswerIndex: 1, explanation: 'Aditya-L1 is India\'s first solar observatory mission, designed to study the Sun\'s outermost layers, the corona, and its atmosphere from the Lagrange point 1 (L1).' },
@@ -60,6 +67,7 @@ export const MCQS: MCQData[] = [
     { id: 24, subject: Subject.ScienceTech, question: 'The term "Golden Rice" refers to:', options: ['A variety of rice that grows in arid regions', 'A genetically engineered rice with high beta-carotene', 'A rare and expensive variety of Basmati rice', 'Rice cooked with turmeric'], correctAnswerIndex: 1, explanation: 'Golden Rice is a variety of rice produced through genetic engineering to biosynthesize beta-carotene, a precursor of Vitamin A, in the edible parts of rice.' },
     { id: 25, subject: Subject.ScienceTech, question: 'What does "5G" in mobile networks stand for?', options: ['5 Gigahertz', '5th Generation', '5 Gigabytes', '5th Grade'], correctAnswerIndex: 1, explanation: '5G stands for the 5th generation of mobile networks, a significant evolution from the previous 4G LTE networks, offering higher speeds and lower latency.' },
     { id: 109, subject: Subject.ScienceTech, question: 'What is a "Geostationary Orbit"?', options: ['An orbit directly above the Earth\'s equator', 'An orbit that is synchronized with the Earth\'s rotation', 'A polar orbit', 'A low Earth orbit'], correctAnswerIndex: 1, explanation: 'A geostationary orbit is a specific type of geosynchronous orbit directly above the Earth\'s equator (0° latitude), with a period matching the Earth\'s sidereal rotation period. An object in such an orbit appears motionless, at a fixed position in the sky, to ground observers.' },
+    { id: 55, subject: Subject.ScienceTech, question: 'What is CRISPR-Cas9?', options: ['A new antibiotic', 'A gene-editing tool', 'A type of cryptocurrency', 'A space telescope'], correctAnswerIndex: 1, explanation: 'CRISPR-Cas9 is a revolutionary technology that allows scientists to edit parts of the genome by removing, adding or altering sections of the DNA sequence.' },
 
     // Environment
     { id: 26, subject: Subject.Environment, question: 'A "Ramsar Site" is a wetland of international importance under which convention?', options: ['Bonn Convention', 'Ramsar Convention', 'Stockholm Convention', 'Vienna Convention'], correctAnswerIndex: 1, explanation: 'The Ramsar Convention on Wetlands is an international treaty for the conservation and sustainable use of wetlands, also known as the Convention on Wetlands.' },
@@ -68,6 +76,7 @@ export const MCQS: MCQData[] = [
     { id: 29, subject: Subject.Environment, question: 'The Kyoto Protocol is an international treaty related to:', options: ['Ozone layer depletion', 'Climate change and greenhouse gas emissions', 'Biodiversity conservation', 'Hazardous waste management'], correctAnswerIndex: 1, explanation: 'The Kyoto Protocol operationalizes the United Nations Framework Convention on Climate Change (UNFCCC) by committing industrialized countries and economies in transition to limit and reduce greenhouse gases (GHG) emissions.' },
     { id: 30, subject: Subject.Environment, question: 'Which National Park is famous for the "one-horned rhinoceros"?', options: ['Jim Corbett National Park', 'Kaziranga National Park', 'Bandipur National Park', 'Kanha National Park'], correctAnswerIndex: 1, explanation: 'Kaziranga National Park in Assam is home to the world\'s largest population of one-horned rhinoceroses.' },
     { id: 110, subject: Subject.Environment, question: 'What is "Biomagnification"?', options: ['Increase in the concentration of a pollutant at a trophic level', 'The process of ecosystem restoration', 'The measurement of biodiversity', 'The creation of biofuels'], correctAnswerIndex: 0, explanation: 'Biomagnification, also known as bioamplification, is the increasing concentration of a substance, such as a toxic chemical, in the tissues of organisms at successively higher levels in a food chain.' },
+    { id: 56, subject: Subject.Environment, question: 'What is a "Biodiversity Hotspot"?', options: ['A place with many tourist attractions', 'A region with a high level of endemic species that is under threat', 'A popular national park', 'An area prone to natural disasters'], correctAnswerIndex: 1, explanation: 'A biodiversity hotspot is a biogeographic region with significant levels of biodiversity that is threatened with destruction. An area must meet two strict criteria to be a hotspot.' },
 
     // Art & Culture
     { id: 31, subject: Subject.ArtCulture, question: '"Sattriya" is a classical dance form of which state?', options: ['Odisha', 'Manipur', 'Assam', 'Kerala'], correctAnswerIndex: 2, explanation: 'Sattriya is a major Indian classical dance that originated in the Krishna-centered Vaishnavism monasteries of Assam and is attributed to the 15th-century Bhakti movement scholar and saint Mahapurush Srimanta Sankardev.' },
@@ -76,23 +85,7 @@ export const MCQS: MCQData[] = [
     { id: 34, subject: Subject.ArtCulture, question: 'Which of the following is a prominent festival celebrated in Kerala?', options: ['Bihu', 'Pongal', 'Onam', 'Holi'], correctAnswerIndex: 2, explanation: 'Onam is a major annual harvest festival celebrated by Malayalis in and outside Kerala. It is the official festival of the state and includes a spectrum of cultural events.' },
     { id: 35, subject: Subject.ArtCulture, question: 'The concept of "Shad Darshanas" (Six Schools) is associated with:', options: ['Indian Philosophy', 'Indian Music', 'Indian Dance', 'Indian Architecture'], correctAnswerIndex: 0, explanation: 'Shad Darshanas refers to the six orthodox schools of Hindu philosophy: Samkhya, Yoga, Nyaya, Vaisheshika, Mimamsa, and Vedanta.' },
     { id: 111, subject: Subject.ArtCulture, question: 'Which Veda is primarily a collection of hymns set to music?', options: ['Rigveda', 'Samaveda', 'Yajurveda', 'Atharvaveda'], correctAnswerIndex: 1, explanation: 'The Samaveda is the Veda of melodies and chants. It is an ancient Vedic Sanskrit text, and part of the scriptures of Hinduism. It is a liturgical text whose 1,875 verses are primary melodies for liturgical recitation.' },
-
-    // Miscellaneous
-    { id: 36, subject: Subject.CurrentAffairs, question: 'The term of the Lok Sabha is five years, but it can be extended during a National Emergency for a period of:', options: ['Six months at a time', 'One year at a time', 'Two years at a time', 'Indefinitely'], correctAnswerIndex: 1, explanation: 'During a national emergency, the term of the Lok Sabha can be extended by a law of Parliament for one year at a time for any length of time.' },
-    { id: 37, subject: Subject.History, question: 'The "Poona Pact" was signed between Mahatma Gandhi and:', options: ['Lord Irwin', 'Muhammad Ali Jinnah', 'B. R. Ambedkar', 'Subhas Chandra Bose'], correctAnswerIndex: 2, explanation: 'The Poona Pact was an agreement between Mahatma Gandhi and Dr. B. R. Ambedkar on behalf of depressed classes and upper caste Hindu leaders on the reservation of electoral seats for the depressed classes in the legislature of British India in 1932.' },
-    { id: 38, subject: Subject.Polity, question: 'The 73rd Constitutional Amendment Act is related to:', options: ['Municipalities', 'Panchayati Raj', 'Official Languages', 'Fundamental Duties'], correctAnswerIndex: 1, explanation: 'The 73rd Amendment Act, 1992, added a new Part IX to the constitution titled "The Panchayats" and granted constitutional status to the Panchayati Raj institutions.' },
-    { id: 39, subject: Subject.Economy, question: 'What is "Stagflation"?', options: ['High inflation with high economic growth', 'Low inflation with low economic growth', 'Persistent high inflation combined with high unemployment and stagnant demand', 'A period of deflation'], correctAnswerIndex: 2, explanation: 'Stagflation is a condition of slow economic growth and relatively high unemployment—or economic stagnation—accompanied by rising prices, or inflation.' },
-    { id: 40, subject: Subject.Geography, question: 'The "Palk Strait" separates India from which country?', options: ['Maldives', 'Sri Lanka', 'Indonesia', 'Myanmar'], correctAnswerIndex: 1, explanation: 'The Palk Strait is a strait between the Tamil Nadu state of India and the Jaffna District of the Northern Province of the island nation of Sri Lanka.' },
-    { id: 41, subject: Subject.Environment, question: 'What is "Eutrophication"?', options: ['The process of water becoming enriched with minerals and nutrients', 'The process of soil erosion', 'The increase of CO2 concentration in the atmosphere', 'The decrease in biodiversity'], correctAnswerIndex: 0, explanation: 'Eutrophication is the process by which a body of water becomes progressively enriched with minerals and nutrients, which can lead to excessive growth of algae (algal blooms) and depletion of oxygen.' },
-    { id: 42, subject: Subject.ScienceTech, question: 'ISRO\'s mission "Gaganyaan" is related to:', options: ['Lunar Exploration', 'Mars Orbiter Mission', 'Human Spaceflight Program', 'Solar Study'], correctAnswerIndex: 2, explanation: 'Gaganyaan is an Indian crewed orbital spacecraft intended to be the formative spacecraft of the Indian Human Spaceflight Programme.' },
-    { id: 43, subject: Subject.ArtCulture, question: '"Madhubani" painting is a style of folk painting native to which Indian state?', options: ['Rajasthan', 'Bihar', 'West Bengal', 'Uttar Pradesh'], correctAnswerIndex: 1, explanation: 'Madhubani art (or Mithila painting) is a style of Indian painting, practiced in the Mithila region of the Indian subcontinent. This painting is done with a variety of tools, including fingers, twigs, brushes, nib-pens, and matchsticks and using natural dyes and pigments.' },
-    { id: 44, subject: Subject.Polity, question: 'The power of the Supreme Court of India to decide disputes between the Centre and the States falls under its:', options: ['Advisory Jurisdiction', 'Appellate Jurisdiction', 'Original Jurisdiction', 'Writ Jurisdiction'], correctAnswerIndex: 2, explanation: 'The original jurisdiction of the Supreme Court extends to disputes between the Government of India and one or more States or between two or more States.' },
-    { id: 45, subject: Subject.History, question: 'The capital of the Vijayanagara Empire was:', options: ['Mysore', 'Hampi', 'Belur', 'Badami'], correctAnswerIndex: 1, explanation: 'Hampi, a temple town in northern Karnataka, was the capital of the historic Vijayanagara Empire. The ruins of Hampi are a UNESCO World Heritage Site.' },
-    { id: 46, subject: Subject.Economy, question: 'Who is known as the "Father of the Green Revolution" in India?', options: ['Verghese Kurien', 'C. Rangarajan', 'M. S. Swaminathan', 'Norman Borlaug'], correctAnswerIndex: 2, explanation: 'M. S. Swaminathan is renowned as the Father of the Green Revolution in India for his leadership and success in introducing and further developing high-yielding varieties of wheat.' },
-    { id: 47, subject: Subject.Geography, question: 'The "Tropic of Cancer" does NOT pass through which of the following Indian states?', options: ['Gujarat', 'Rajasthan', 'Odisha', 'Tripura'], correctAnswerIndex: 2, explanation: 'The Tropic of Cancer passes through 8 Indian states: Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura, and Mizoram. It does not pass through Odisha.' },
-    { id: 48, subject: Subject.Environment, question: 'The Montreal Protocol is related to the:', options: ['Protection of the ozone layer', 'Control of transboundary movement of hazardous wastes', 'Conservation of migratory species', 'Reduction of greenhouse gas emissions'], correctAnswerIndex: 0, explanation: 'The Montreal Protocol is an international treaty designed to protect the ozone layer by phasing out the production of numerous substances that are responsible for ozone depletion.' },
-    { id: 49, subject: Subject.Polity, question: 'What does the term "judicial review" mean?', options: ['The power of the judiciary to review its own judgments', 'The power of the judiciary to review the functioning of the executive', 'The power of the judiciary to review and declare the laws passed by the legislature as unconstitutional', 'The power of the President to review judicial decisions'], correctAnswerIndex: 2, explanation: 'Judicial review is a process under which executive or legislative actions are subject to review by the judiciary. A court with judicial review power may invalidate laws and decisions that are incompatible with a higher authority, such as the Constitution.' },
-    { id: 50, subject: Subject.History, question: 'The first session of the Indian National Congress was held in:', options: ['Calcutta', 'Bombay', 'Madras', 'Delhi'], correctAnswerIndex: 1, explanation: 'The first session of the Indian National Congress was held from 28–31 December 1885 in Bombay (now Mumbai), and was attended by 72 delegates.' },
+    { id: 57, subject: Subject.ArtCulture, question: 'What are the three main styles of Indian temple architecture?', options: ['Nagara, Dravida, and Vesara', 'Gupta, Maurya, and Chola', 'Buddhist, Jain, and Hindu', 'Rock-cut, Monolithic, and Structural'], correctAnswerIndex: 0, explanation: 'The three main styles of temple architecture are the Nagara style of Northern India, the Dravida style of Southern India, and the Vesara style, which is a hybrid of the two, found primarily in the Deccan region.' },
 ];
 
 export const FLASHCARDS: FlashcardData[] = [
@@ -104,6 +97,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 5, subject: Subject.Polity, question: 'Under which article is the Election Commission of India established?', answer: 'Article 324 of the Constitution provides for the establishment of the Election Commission, vesting in it the power of superintendence, direction, and control of elections.' },
     { id: 101, subject: Subject.Polity, question: 'What is a "Prorogation"?', answer: 'Prorogation terminates a session of the House and is done by the President of India. It does not dissolve the House (in the case of Lok Sabha).' },
     { id: 102, subject: Subject.Polity, question: 'Explain the concept of "Separation of Powers".', answer: 'It is a model for the governance of a state where the government is divided into three branches: the legislature, the executive, and the judiciary, each with separate and independent powers and responsibilities so that the powers of one branch are not in conflict with those of the other branches.' },
+    { id: 51, subject: Subject.Polity, question: 'What is "Judicial Review"?', answer: 'The power of the judiciary to examine the constitutionality of legislative enactments and executive orders of both the Central and State governments. If they are found to be in violation of the Constitution, they can be declared as illegal, unconstitutional and invalid.' },
 
     // History
     { id: 6, subject: Subject.History, question: 'Who was the founder of the Mauryan Empire?', answer: 'Chandragupta Maurya, who founded the empire in 322 BCE with the help of Chanakya.' },
@@ -113,6 +107,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 10, subject: Subject.History, question: 'Who wrote the "Arthashastra"?', answer: 'Chanakya (also known as Kautilya or Vishnugupta), an ancient Indian teacher, philosopher, economist, jurist and royal advisor to Chandragupta Maurya.' },
     { id: 103, subject: Subject.History, question: 'What was the "Ryotwari System"?', answer: 'A land revenue system in British India introduced by Thomas Munro. The revenue was paid directly by the ryots (cultivators) to the State.' },
     { id: 104, subject: Subject.History, question: 'What was the "Ghadar Party"?', answer: 'An Indian revolutionary organisation primarily founded by Punjabi Indians in the United States and Canada with the aim of securing India\'s independence from British rule. Key leaders included Lala Har Dayal and Sohan Singh Bhakna.' },
+    { id: 52, subject: Subject.History, question: 'What was the "Doctrine of Lapse"?', answer: 'An annexation policy applied by the British East India Company in India until 1859. If a ruler of a dependent state died without a natural heir, their state would be annexed by the British. It was introduced by Lord Dalhousie.' },
 
     // Economy
     { id: 11, subject: Subject.Economy, question: 'Define "Repo Rate".', answer: 'The rate at which the Reserve Bank of India (RBI) lends money to commercial banks in the event of any shortfall of funds.' },
@@ -122,6 +117,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 15, subject: Subject.Economy, question: 'What is "Fiscal Policy"?', answer: 'Fiscal policy is the use of government revenue collection (mainly taxes) and expenditure to influence a country\'s economy.' },
     { id: 105, subject: Subject.Economy, question: 'What is "Priority Sector Lending" (PSL)?', answer: 'A mandate from the RBI to banks to dedicate a certain percentage of their lending to specific sectors of the economy like agriculture, MSMEs, education, housing, etc., which may not get timely and adequate credit otherwise.' },
     { id: 106, subject: Subject.Economy, question: 'Explain "Balance of Payments" (BoP).', answer: 'The Balance of Payments of a country is the record of all economic transactions between the residents of the country and the rest of the world in a particular period of time. It comprises the current account and the capital account.' },
+    { id: 53, subject: Subject.Economy, question: 'What is "Stagflation"?', answer: 'A situation in an economy where the inflation rate is high, the economic growth rate slows, and unemployment remains steadily high. It presents a dilemma for economic policy, since actions intended to lower inflation may exacerbate unemployment.' },
 
     // Geography
     { id: 16, subject: Subject.Geography, question: 'Name the major soil type found in the Deccan Plateau.', answer: 'Black Soil (or Regur soil), which is ideal for cotton cultivation.' },
@@ -131,6 +127,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 20, subject: Subject.Geography, question: 'Which line of latitude passes through the middle of India?', answer: 'The Tropic of Cancer (23.5° N latitude) passes through the middle of India, dividing it into almost two equal parts.' },
     { id: 107, subject: Subject.Geography, question: 'What is a "Lagoon"?', answer: 'A shallow body of water separated from a larger body of water by barrier islands or reefs. Chilika Lake in Odisha is the largest coastal lagoon in India.' },
     { id: 108, subject: Subject.Geography, question: 'Differentiate between "Weather" and "Climate".', answer: 'Weather refers to short-term atmospheric conditions in a specific place, while climate is the long-term average of weather patterns in a region, typically over 30 years or more.' },
+    { id: 54, subject: Subject.Geography, question: 'What is a "Strait"?', answer: 'A narrow passage of water connecting two seas or two other large areas of water. The Palk Strait, for example, connects the Bay of Bengal in the northeast with Palk Bay in the southwest.' },
 
     // Science & Tech
     { id: 21, subject: Subject.ScienceTech, question: 'What is CRISPR-Cas9?', answer: 'It is a revolutionary gene-editing technology that allows scientists to make precise changes to the DNA of organisms. It has vast applications in medicine and agriculture.' },
@@ -139,6 +136,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 24, subject: Subject.ScienceTech, question: 'Explain "Blockchain" technology.', answer: 'A decentralized, distributed, and often public, digital ledger consisting of records called blocks that is used to record transactions across many computers so that any involved block cannot be altered retroactively, without the alteration of all subsequent blocks.' },
     { id: 25, subject: Subject.ScienceTech, question: 'What is "Nuclear Fission"?', answer: 'A nuclear reaction in which the nucleus of an atom splits into smaller parts (lighter nuclei), often producing free neutrons and photons (in the form of gamma rays), and releasing a very large amount of energy.' },
     { id: 109, subject: Subject.ScienceTech, question: 'What is "Artificial Intelligence" (AI)?', answer: 'The simulation of human intelligence in machines that are programmed to think like humans and mimic their actions. The term may also be applied to any machine that exhibits traits associated with a human mind such as learning and problem-solving.' },
+    { id: 55, subject: Subject.ScienceTech, question: 'What is ISRO\'s Gaganyaan mission?', answer: 'Gaganyaan is the Indian Human Spaceflight Programme. The objective is to demonstrate the capability to send a crew of three members to an orbit of 400 km for a 3-day mission and bring them back safely to Earth.' },
 
     // Environment
     { id: 26, subject: Subject.Environment, question: 'Define "Carbon Sequestration".', answer: 'It is the process of capturing and storing atmospheric carbon dioxide. It is one method of reducing the amount of CO2 in the atmosphere with the goal of reducing global climate change.' },
@@ -147,6 +145,7 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 29, subject: Subject.Environment, question: 'Define "Food Chain".', answer: 'A linear sequence of organisms where nutrients and energy are transferred from one organism to another. It begins with a producer organism, followed by consumer organisms.' },
     { id: 30, subject: Subject.Environment, question: 'What is the "Greenhouse Effect"?', answer: 'The process by which radiation from a planet\'s atmosphere warms the planet\'s surface to a temperature above what it would be without this atmosphere. Greenhouse gases like CO2, methane, and water vapor trap heat.' },
     { id: 110, subject: Subject.Environment, question: 'What are "Intended Nationally Determined Contributions" (INDCs)?', answer: 'They are the climate action plans submitted by countries under the Paris Agreement. They outline the steps the country intends to take to reduce its greenhouse gas emissions and adapt to the impacts of climate change.' },
+    { id: 56, subject: Subject.Environment, question: 'What is "Eutrophication"?', answer: 'The process whereby a body of water becomes overly enriched with minerals and nutrients which induce excessive growth of algae. This process may result in oxygen depletion of the water body.' },
 
     // Art & Culture
     { id: 31, subject: Subject.ArtCulture, question: 'What are the key features of the Gandhara School of Art?', answer: 'It is a syncretic art style that blended Greek and Roman artistic traditions with Indian subject matter, primarily Buddhist imagery. It flourished in the north-western part of the Indian subcontinent.' },
@@ -155,33 +154,18 @@ export const FLASHCARDS: FlashcardData[] = [
     { id: 34, subject: Subject.ArtCulture, question: 'What is the significance of the "Elephanta Caves"?', answer: 'Located on Elephanta Island in Mumbai Harbour, these are a network of sculpted caves dedicated to the Hindu god Shiva. They are a UNESCO World Heritage Site.' },
     { id: 35, subject: Subject.ArtCulture, question: 'Which classical dance form is associated with the "Natyashastra"?', answer: 'Bharatanatyam, an Indian classical dance form that originated in Tamil Nadu, is considered to be the oldest classical dance tradition in India and its theory can be traced back to the ancient Sanskrit text "Natyashastra".' },
     { id: 111, subject: Subject.ArtCulture, question: 'What is the "Vesara" style of temple architecture?', answer: 'A hybrid style of temple architecture that combines features of the northern (Nagara) and southern (Dravida) styles. It is predominantly seen in the Deccan region, particularly in Karnataka.' },
-
-    // Miscellaneous
-    { id: 36, subject: Subject.GeneralKnowledge, question: 'What is the full form of ISRO?', answer: 'Indian Space Research Organisation.' },
-    { id: 37, subject: Subject.Polity, question: 'What is a "Zero Hour" in parliamentary proceedings?', answer: 'An informal device available to the members of the Parliament to raise matters without any prior notice. It starts immediately after the question hour and lasts until the agenda for the day is taken up.' },
-    { id: 38, subject: Subject.History, question: 'Who gave the slogan "Swaraj is my birthright and I shall have it"?', answer: 'Bal Gangadhar Tilak.' },
-    { id: 39, subject: Subject.Economy, question: 'What is "Minimum Support Price" (MSP)?', answer: 'MSP is a form of market intervention by the Government of India to insure agricultural producers against any sharp fall in farm prices. It is announced at the beginning of the sowing season for certain crops.' },
-    { id: 40, subject: Subject.Geography, question: 'What is a "Dooar"?', answer: 'The alluvial floodplains in eastern-northeastern India that lie south of the outer foothills of the Himalayas and north of the Brahmaputra River basin. They are known for tea gardens.' },
-    { id: 41, subject: Subject.Environment, question: 'What is the "Red Data Book"?', answer: 'A public document created by the International Union for Conservation of Nature (IUCN) for recording rare and endangered species of animals, plants and fungi.' },
-    { id: 42, subject: Subject.ScienceTech, question: 'What is the difference between a "Geostationary" and a "Geosynchronous" orbit?', answer: 'A geostationary orbit is a special type of geosynchronous orbit which is circular and lies in the plane of the Earth\'s equator. A satellite in this orbit appears stationary from the ground.' },
-    { id: 43, subject: Subject.Polity, question: 'What is the "Basic Structure Doctrine"?', answer: 'A legal principle established by the Supreme Court of India in the Kesavananda Bharati case (1973), which states that the Parliament of India cannot alter certain fundamental features of the Constitution.' },
-    { id: 44, subject: Subject.History, question: 'Who was the first Governor-General of independent India?', answer: 'Lord Mountbatten. C. Rajagopalachari was the last Governor-General of India and the only Indian to hold the position.' },
-    { id: 45, subject: Subject.Economy, question: 'What is the "Goods and Services Tax" (GST)?', answer: 'An indirect tax used in India on the supply of goods and services. It is a comprehensive, multistage, destination-based tax that has replaced many indirect taxes in India.' },
-    { id: 46, subject: Subject.Geography, question: 'What is the "Isthmus of Suez"?', answer: 'The narrow strip of land that lies between the Mediterranean Sea and the Red Sea, linking the continents of Africa and Asia. The Suez Canal was built across it.' },
-    { id: 47, subject: Subject.Environment, question: 'Define "Biomagnification".', answer: 'The increasing concentration of a substance, such as a toxic chemical, in the tissues of organisms at successively higher levels in a food chain.' },
-    { id: 48, subject: Subject.ArtCulture, question: 'What is the "Dravidian" style of temple architecture?', answer: 'A style of temple architecture that emerged in Southern India. It is characterized by a pyramid-shaped vimana (tower), a garbhagriha (sanctum), and a gopuram (large gateway).' },
-    { id: 49, subject: Subject.Polity, question: 'What are the three lists in the Seventh Schedule of the Constitution?', answer: 'The Union List, the State List, and the Concurrent List, which divide legislative powers between the Union and the States.' },
-    { id: 50, subject: Subject.History, question: 'What was the "Ryotwari System"?', answer: 'A land revenue system introduced by Thomas Munro in British India. The revenue was paid directly by the ryots (peasant cultivators) to the state.' },
+    { id: 57, subject: Subject.ArtCulture, question: 'What is "Madhubani" painting?', answer: 'Also known as Mithila painting, it is a style of Indian painting practiced in the Mithila region of Bihar. It is characterized by complex geometrical patterns and is done with fingers, twigs, brushes, and natural dyes.' },
 ];
 
 export const CURRENT_AFFAIRS_DATA: CurrentAffairsData[] = [
     { id: 1, date: 'October 26, 2023', category: Subject.CurrentAffairs, title: 'National Mission for Clean Ganga (NMCG)', summary: 'The NMCG has been registered as a society, acting as the implementation arm of the National Ganga River Basin Authority (NGRBA). The mission aims to ensure effective abatement of pollution and rejuvenation of the river Ganga by adopting a river basin approach to promote inter-sectoral co-ordination for comprehensive planning and management.' },
-    // FIX: Using template literals for strings with apostrophes to avoid parsing errors.
     { id: 2, date: 'October 25, 2023', category: Subject.Economy, title: `India's Gig Economy Booms`, summary: `A recent NITI Aayog report estimates that India's gig workforce is expected to expand to 2.35 crore by 2029-30. The report highlights the need for social security measures for gig workers, including income support, health insurance, and skill development opportunities to ensure their well-being and formalization.` },
     { id: 3, date: 'October 24, 2023', category: Subject.ScienceTech, title: 'Advancements in Solid-State Batteries', summary: 'Researchers have developed a new stable electrolyte for solid-state lithium batteries, which could offer higher energy density and improved safety compared to traditional lithium-ion batteries. This breakthrough could revolutionize electric vehicles and portable electronics by providing longer battery life and reducing fire risks.' },
     { id: 4, date: 'October 23, 2023', category: Subject.Polity, title: 'Debate on the Collegium System', summary: 'The system of appointing and transferring judges in India, known as the Collegium System, has once again come under debate. Critics argue for more transparency and accountability, suggesting a National Judicial Appointments Commission (NJAC) as an alternative. Proponents of the collegium system emphasize the importance of judicial independence from the executive.' },
     { id: 5, date: 'October 22, 2023', category: Subject.Environment, title: 'Project Cheetah: One Year Review', summary: 'One year after the reintroduction of cheetahs in Kuno National Park, the project has seen mixed results with several cheetah deaths but also the birth of new cubs. Experts are analyzing the challenges, including habitat adaptation and inter-species competition, to ensure the long-term success of this ambitious conservation project.' },
     { id: 6, date: 'October 21, 2023', category: Subject.CurrentAffairs, title: 'India-Middle East-Europe Economic Corridor (IMEC)', summary: 'Announced at the G20 Summit, the IMEC is a planned infrastructure project to connect India, the Middle East, and Europe through a network of railways and sea lanes. The corridor aims to boost economic development, enhance trade, and foster regional integration, acting as a strategic alternative to China\'s Belt and Road Initiative.' },
+    { id: 7, date: 'October 20, 2023', category: Subject.Economy, title: 'Production-Linked Incentive (PLI) Scheme Expansion', summary: 'The Government of India is considering expanding the PLI scheme to more sectors, including toys, furniture, and leather. The scheme aims to boost domestic manufacturing, attract foreign investment, and make India a global manufacturing hub.' },
+    { id: 8, date: 'October 19, 2023', category: Subject.Polity, title: 'The Women\'s Reservation Bill 2023', summary: 'The "Nari Shakti Vandan Adhiniyam" was passed by Parliament to reserve one-third of all seats for women in the Lok Sabha and state legislative assemblies. The reservation will be implemented after a delimitation exercise is conducted, following the next census.' },
 ];
 
 export const INTERVIEW_QUESTIONS: InterviewQuestionData[] = [
@@ -195,11 +179,72 @@ export const INTERVIEW_QUESTIONS: InterviewQuestionData[] = [
     { id: 8, category: 'Situational', question: 'Misinformation and fake news are spreading rapidly on social media, causing panic. As a police chief, what actions would you take?', answer: '1. Establish a dedicated social media monitoring cell to identify fake news. 2. Use official social media channels to quickly issue clarifications and fact-checks. 3. Launch a public awareness campaign on how to spot fake news. 4. Take strict legal action against individuals or groups found to be deliberately spreading misinformation.' },
 ];
 
+export const MIND_MAP_DATA: MindMapData[] = [
+    {
+        id: 1,
+        subject: Subject.Polity,
+        centralTopic: 'Fundamental Rights (Part III)',
+        nodes: [
+            { topic: 'Article 12: Definition of "State"' },
+            { topic: 'Article 13: Laws inconsistent with FRs are void' },
+            {
+                topic: 'Right to Equality (Art. 14-18)',
+                children: [
+                    { topic: 'Art. 14: Equality before law & Equal protection of laws' },
+                    { topic: 'Art. 15: Prohibition of discrimination' },
+                    { topic: 'Art. 16: Equality of opportunity in public employment' },
+                    { topic: 'Art. 17: Abolition of Untouchability' },
+                    { topic: 'Art. 18: Abolition of titles' },
+                ]
+            },
+            {
+                topic: 'Right to Freedom (Art. 19-22)',
+                children: [
+                    { topic: 'Art. 19: Six Freedoms (Speech, Assembly, etc.)' },
+                    { topic: 'Art. 20: Protection in respect of conviction for offences' },
+                    { topic: 'Art. 21: Protection of life and personal liberty' },
+                    { topic: 'Art. 21A: Right to Education' },
+                    { topic: 'Art. 22: Protection against arrest and detention' },
+                ]
+            },
+            {
+                topic: 'Right against Exploitation (Art. 23-24)',
+                children: [
+                    { topic: 'Art. 23: Prohibition of traffic in human beings and forced labour' },
+                    { topic: 'Art. 24: Prohibition of employment of children in factories, etc.' },
+                ]
+            },
+            {
+                topic: 'Right to Freedom of Religion (Art. 25-28)',
+                children: [
+                    { topic: 'Art. 25: Freedom of conscience and free profession, practice and propagation of religion' },
+                    { topic: 'Art. 26: Freedom to manage religious affairs' },
+                ]
+            },
+            {
+                topic: 'Cultural and Educational Rights (Art. 29-30)',
+                children: [
+                    { topic: 'Art. 29: Protection of interests of minorities' },
+                    { topic: 'Art. 30: Right of minorities to establish and administer educational institutions' },
+                ]
+            },
+            {
+                topic: 'Right to Constitutional Remedies (Art. 32)',
+                children: [
+                    { topic: 'Heart and Soul of the Constitution' },
+                    { topic: 'Writs: Habeas Corpus, Mandamus, Prohibition, Certiorari, Quo-Warranto' },
+                ]
+            },
+        ]
+    }
+];
+
+
 // Icons
 export const ICONS = {
     reels: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4" /></svg>,
     mcqs: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-    flashcards: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 00-2 2v2m14 0h-2" /></svg>,
+    study_tools: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
     interview: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>,
     current_affairs: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3H9m-4 4h2m-4 4h2m4-8h2m-4 4h2m-4 4h2" /></svg>,
 };
