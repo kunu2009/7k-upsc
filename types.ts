@@ -1,4 +1,3 @@
-
 export enum Subject {
   History = "History",
   Polity = "Polity",
@@ -8,6 +7,10 @@ export enum Subject {
   GeneralKnowledge = "General Knowledge",
   Interview = "Interview Prep",
   Strategy = "Exam Strategy",
+  ScienceTech = "Science & Tech",
+  Environment = "Environment & Ecology",
+  ArtCulture = "Art & Culture",
+  Ethics = "Ethics",
 }
 
 export type Page = 'reels' | 'mcqs' | 'flashcards' | 'interview';
