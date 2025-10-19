@@ -62,12 +62,12 @@ const FlashcardSection: React.FC = () => {
       </div>
 
       <div className="w-full max-w-md mt-8">
-        <div className="text-center text-slate-300 mb-2 text-sm">
+        <div className="text-center text-slate-300 mb-2 font-semibold">
           <p>Card {currentIndex + 1} of {FLASHCARDS.length}</p>
         </div>
-        <div className="w-full bg-slate-700 rounded-full h-2">
+        <div className="w-full bg-slate-700 rounded-full h-3 shadow-inner">
           <div 
-            className="bg-sky-500 h-2 rounded-full transition-all duration-300 ease-out" 
+            className="bg-gradient-to-r from-sky-500 to-cyan-400 h-3 rounded-full transition-all duration-300 ease-out" 
             style={{ width: `${((currentIndex + 1) / FLASHCARDS.length) * 100}%` }}
             aria-valuenow={currentIndex + 1}
             aria-valuemin={1}

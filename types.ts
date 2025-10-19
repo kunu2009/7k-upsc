@@ -13,7 +13,7 @@ export enum Subject {
   Ethics = "Ethics",
 }
 
-export type Page = 'reels' | 'mcqs' | 'flashcards' | 'interview';
+export type Page = 'reels' | 'mcqs' | 'flashcards' | 'interview' | 'current_affairs';
 
 export interface ReelCardData {
   id: number;
@@ -44,4 +44,12 @@ export interface InterviewQuestionData {
     question: string;
     answer: string;
     category: 'Personal' | 'Situational' | 'Technical';
+}
+
+export interface CurrentAffairsData {
+    id: number;
+    date: string;
+    title: string;
+    summary: string;
+    category: Subject;
 }

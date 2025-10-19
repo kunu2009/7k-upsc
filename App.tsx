@@ -6,10 +6,11 @@ import ReelFeed from './components/ReelFeed';
 import MCQSection from './components/MCQSection';
 import FlashcardSection from './components/FlashcardSection';
 import InterviewPrepSection from './components/InterviewPrepSection';
+import CurrentAffairsSection from './components/CurrentAffairsSection';
 import { Page } from './types';
 
 const App: React.FC = () => {
-  const [activePage, setActivePage] = useState<Page>('reels');
+  const [activePage, setActivePage] = useState<Page>('current_affairs');
 
   const renderContent = () => {
     switch (activePage) {
@@ -21,8 +22,10 @@ const App: React.FC = () => {
         return <FlashcardSection />;
       case 'interview':
         return <InterviewPrepSection />;
+      case 'current_affairs':
+        return <CurrentAffairsSection />;
       default:
-        return <ReelFeed />;
+        return <CurrentAffairsSection />;
     }
   };
 
