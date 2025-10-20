@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
-import ReelFeed from './components/ReelFeed';
 import MCQSection from './components/MCQSection';
 import StudyToolsSection from './components/StudyToolsSection';
 import InterviewPrepSection from './components/InterviewPrepSection';
 import CurrentAffairsSection from './components/CurrentAffairsSection';
+import GeneralKnowledgeSection from './components/GeneralKnowledgeSection';
 import { Page } from './types';
 
 const App: React.FC = () => {
@@ -14,8 +14,6 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activePage) {
-      case 'reels':
-        return <ReelFeed />;
       case 'mcqs':
         return <MCQSection />;
       case 'study_tools':
@@ -24,6 +22,8 @@ const App: React.FC = () => {
         return <InterviewPrepSection />;
       case 'current_affairs':
         return <CurrentAffairsSection />;
+      case 'general_knowledge':
+        return <GeneralKnowledgeSection />;
       default:
         return <CurrentAffairsSection />;
     }
