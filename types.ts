@@ -14,6 +14,7 @@ export enum Subject {
 }
 
 export type Page = 'mcqs' | 'study_tools' | 'interview' | 'current_affairs' | 'general_knowledge';
+export type Difficulty = 'Easy' | 'Medium' | 'Hard';
 
 export interface ReelCardData {
   id: number;
@@ -30,6 +31,7 @@ export interface MCQData {
   options: string[];
   correctAnswerIndex: number;
   explanation: string;
+  difficulty: Difficulty;
 }
 
 export interface FlashcardData {

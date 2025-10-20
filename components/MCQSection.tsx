@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MCQS } from '../constants';
-import { MCQData } from '../types';
+import { MCQData, Difficulty } from '../types';
 
 const MCQ_PROGRESS_KEY = 'mcqProgress';
 const MCQ_FEEDBACK_KEY = 'mcqFeedback';
@@ -62,6 +62,7 @@ const MCQSection: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState('Copy');
   const [bookmarks, setBookmarks] = useState(getInitialBookmarks());
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'All' | Difficulty>('All');
   
   // Exam Mode State
   const [isExamMode, setIsExamMode] = useState(false);
@@ -72,11 +73,19 @@ const MCQSection: React.FC = () => {
 
   // Memoized lists and current question
   const filteredMCQs = useMemo(() => {
-    if (showOnlyBookmarked) {
-        return MCQS.filter(mcq => bookmarks[mcq.id]);
+    let mcqs = MCQS;
+    
+    if (selectedDifficulty !== 'All') {
+        mcqs = mcqs.filter(mcq => mcq.difficulty === selectedDifficulty);
     }
-    return MCQS;
-  }, [showOnlyBookmarked, bookmarks]);
+
+    if (showOnlyBookmarked) {
+        mcqs = mcqs.filter(mcq => bookmarks[mcq.id]);
+    }
+    
+    // Shuffle the filtered list of questions
+    return [...mcqs].sort(() => 0.5 - Math.random());
+  }, [showOnlyBookmarked, bookmarks, selectedDifficulty]);
 
   const currentQuestion: MCQData | undefined = isExamMode ? examQuestions[currentQuestionIndex] : filteredMCQs[currentQuestionIndex];
 
@@ -84,7 +93,9 @@ const MCQSection: React.FC = () => {
   useEffect(() => {
     if (isExamMode) return;
     setCurrentQuestionIndex(0);
-  }, [showOnlyBookmarked, isExamMode]);
+    setSelectedOption(null);
+    setShowAnswer(false);
+  }, [showOnlyBookmarked, isExamMode, selectedDifficulty]);
 
   useEffect(() => {
     if (isExamMode) return;
@@ -180,6 +191,13 @@ const MCQSection: React.FC = () => {
   
   const finishExam = () => setExamFinished(true);
 
+  const jumpToQuestion = (index: number) => {
+    if (index >= 0 && index < examQuestions.length) {
+      setCurrentQuestionIndex(index);
+      setSelectedOption(examAnswers[index] ?? null);
+    }
+  };
+
   // Practice Mode Controls
   const handleOptionSelect = (index: number) => {
     if (showAnswer) return;
@@ -260,6 +278,24 @@ const MCQSection: React.FC = () => {
       if (isUserAnswer) return 'bg-red-600/80 ring-2 ring-red-400';
       return 'bg-slate-700';
   };
+  
+  const DifficultySelector = () => (
+    <div className="flex flex-wrap justify-center gap-2 mb-6">
+      {(['All', 'Easy', 'Medium', 'Hard'] as const).map(level => (
+        <button
+          key={level}
+          onClick={() => setSelectedDifficulty(level)}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+            selectedDifficulty === level
+              ? 'bg-sky-600 text-white'
+              : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+          }`}
+        >
+          {level}
+        </button>
+      ))}
+    </div>
+  );
 
   // Conditional Rendering
   if (isExamMode) {
@@ -315,18 +351,53 @@ const MCQSection: React.FC = () => {
                     {formatTime(timeLeft)}
                 </div>
             </div>
-             <div className="flex justify-between items-center mb-4 text-slate-400">
-                <span>Question {currentQuestionIndex + 1}/{examQuestions.length}</span>
-                <button onClick={finishExam} className="text-sm font-semibold text-red-400 hover:underline">Submit Exam</button>
-             </div>
-             <p className="text-lg font-semibold mb-6 text-white">{currentQuestion.question}</p>
-             <div className="space-y-4">
-                {currentQuestion.options.map((option, index) => (
-                    <button key={index} onClick={() => handleExamOptionSelect(index)} className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${getExamOptionClass(index)}`}>
-                    {option}
+            
+            <div className="mb-6">
+              <p className="text-sm text-slate-400 mb-2 text-center">Question Progress</p>
+              <div className="grid grid-cols-10 gap-1.5">
+                {examQuestions.map((_, index) => {
+                  const isAnswered = examAnswers[index] !== undefined;
+                  const isCurrent = index === currentQuestionIndex;
+                  
+                  let buttonClass = 'h-6 w-full rounded transition-colors ';
+                  if (isCurrent) {
+                    buttonClass += 'ring-2 ring-emerald-400 ';
+                  }
+                  if (isAnswered) {
+                    buttonClass += 'bg-sky-600 hover:bg-sky-500';
+                  } else {
+                    buttonClass += 'bg-slate-700 hover:bg-slate-600';
+                  }
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => jumpToQuestion(index)}
+                      className={buttonClass}
+                      aria-label={`Go to question ${index + 1}`}
+                    >
+                      <span className="sr-only">{index + 1}</span>
                     </button>
-                ))}
-             </div>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <div className="bg-slate-900/50 p-5 rounded-lg">
+                 <div className="flex justify-between items-center mb-4 text-slate-400">
+                    <span>Question {currentQuestionIndex + 1}/{examQuestions.length}</span>
+                    <button onClick={finishExam} className="text-sm font-semibold text-red-400 hover:underline">Submit Exam</button>
+                 </div>
+                 <p className="text-lg font-semibold mb-6 text-white min-h-[5rem]">{currentQuestion.question}</p>
+                 <div className="space-y-4">
+                    {currentQuestion.options.map((option, index) => (
+                        <button key={index} onClick={() => handleExamOptionSelect(index)} className={`w-full text-left p-4 rounded-lg transition-colors duration-200 ${getExamOptionClass(index)}`}>
+                        {option}
+                        </button>
+                    ))}
+                 </div>
+            </div>
+
              <div className="flex justify-between mt-8">
                 <button onClick={handleExamPrev} disabled={currentQuestionIndex === 0} className="bg-slate-600 hover:bg-slate-500 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     Previous
@@ -345,10 +416,13 @@ const MCQSection: React.FC = () => {
       return (
         <div className="max-w-2xl mx-auto p-4 text-center">
             <div className="bg-slate-800 p-6 rounded-lg shadow-xl">
+                 <DifficultySelector />
                 <h2 className="text-xl font-bold text-sky-400 mb-4">No Questions Found</h2>
-                <p className="text-slate-300 mb-6">You haven't bookmarked any questions yet. Clear the filter to see all questions.</p>
-                <button onClick={() => setShowOnlyBookmarked(false)} className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    Show All Questions
+                <p className="text-slate-300 mb-6">
+                    There are no questions for the selected filter. Try changing the difficulty or showing all bookmarked questions.
+                </p>
+                <button onClick={() => {setShowOnlyBookmarked(false); setSelectedDifficulty('All');}} className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Reset Filters
                 </button>
             </div>
         </div>
@@ -361,6 +435,7 @@ const MCQSection: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <div className="bg-slate-800 p-6 rounded-lg shadow-xl">
+        <DifficultySelector />
         <div className="flex justify-between items-center mb-4">
             <div className="flex items-center space-x-2 text-slate-400">
                 <span>Question {currentQuestionIndex + 1}/{filteredMCQs.length}</span>
